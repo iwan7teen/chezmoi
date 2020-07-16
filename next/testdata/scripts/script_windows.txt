@@ -1,0 +1,33 @@
+[!windows] skip 'Windows only'
+
+chezmoi apply
+stdout evidence
+
+[short] stop
+
+chezmoi dump
+cmp -text stdout golden/dump.json
+
+chezmoi managed --include=scripts
+cmpenv -text stdout golden/managed
+
+[!exec:tar] stop
+
+chezmoi archive --gzip --output=archive.tar.gz
+exec tar -tzf archive.tar.gz
+cmp -text stdout golden/archive
+
+-- golden/archive --
+script.cmd
+-- golden/dump.json --
+{
+  "script.cmd": {
+    "type": "script",
+    "name": "script.cmd",
+    "contents": "echo evidence\n"
+  }
+}
+-- golden/managed --
+$HOME${/}script.cmd
+-- home/user/.local/share/chezmoi/run_script.cmd --
+echo evidence

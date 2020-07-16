@@ -23,7 +23,6 @@ linters:
   - ineffassign
   - interfacer
   - misspell
-  - nakedret
   - prealloc
   - rowserrcheck
   - scopelint
@@ -48,6 +47,7 @@ linters:
   - gomnd
   - lll
   - maligned
+  - nakedret
   - nestif
   - noctx
   - nolintlint
@@ -78,3 +78,7 @@ issues:
   - linters:
     - scopelint
     path: "_test\\.go"
+  - linters: # FIXME remove these issues
+    - deadcode
+    - unused
+    path: next/
